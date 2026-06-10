@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Проекты в области ИИ — nikulenka</title>
+<meta name="description" content="Портфолио проектов в области искусственного интеллекта: мультиагентные системы, алготрейдинг, Telegram-боты, RAG, автоматизация.">
+<style>
+  :root {
+    --bg: #0b0e14;
+    --bg-soft: #11151f;
+    --card: #161b27;
+    --card-hover: #1c2230;
+    --border: #232a3a;
+    --text: #e6e9f0;
+    --text-dim: #9aa3b5;
+    --text-faint: #6b7488;
+    --accent: #5b8cff;
+    --accent-2: #8b5bff;
+    --green: #3ecf8e;
+    --yellow: #e8b339;
+    --radius: 14px;
+    --maxw: 1180px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ---------- Навигация ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(11,14,20,.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: var(--maxw); margin: 0 auto;
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 24px; overflow-x: auto;
+  }
+  .nav-logo {
+    font-weight: 700; white-space: nowrap; margin-right: 12px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .nav-inner a.nav-link {
+    color: var(--text-dim); font-size: 13.5px; white-space: nowrap;
+    padding: 6px 11px; border-radius: 8px; transition: all .15s;
+  }
+  .nav-inner a.nav-link:hover { color: var(--text); background: var(--card); text-decoration: none; }
+
+  /* ---------- Шапка ---------- */
+  header {
+    max-width: var(--maxw); margin: 0 auto;
+    padding: 72px 24px 40px;
+  }
+  .eyebrow {
+    color: var(--accent); font-size: 13px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; margin-bottom: 16px;
+  }
+  h1 {
+    font-size: clamp(32px, 5vw, 52px); line-height: 1.12;
+    font-weight: 800; letter-spacing: -.02em; max-width: 800px;
+  }
+  h1 .grad {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .lead {
+    margin-top: 20px; max-width: 720px;
+    color: var(--text-dim); font-size: 17px;
+  }
+  .hero-links { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; border-radius: 10px; font-size: 14.5px; font-weight: 600;
+    border: 1px solid var(--border); color: var(--text); transition: all .15s;
+  }
+  .btn:hover { text-decoration: none; border-color: var(--accent); transform: translateY(-1px); }
+  .btn.primary { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; color: #fff; }
+
+  .stats {
+    display: flex; gap: 40px; flex-wrap: wrap;
+    margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--border);
+  }
+  .stat .num { font-size: 30px; font-weight: 800; color: var(--text); }
+  .stat .lbl { font-size: 13px; color: var(--text-faint); margin-top: 2px; }
+
+  /* ---------- Поиск ---------- */
+  .search-wrap {
+    max-width: var(--maxw); margin: 0 auto; padding: 0 24px 8px;
+  }
+  #search {
+    width: 100%; max-width: 480px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    color: var(--text); font-size: 15px; padding: 11px 16px; outline: none;
+    transition: border-color .15s;
+  }
+  #search:focus { border-color: var(--accent); }
+  #search::placeholder { color: var(--text-faint); }
+  .no-results {
+    display: none; color: var(--text-faint); padding: 32px 24px; text-align: center;
+  }
+
+  /* ---------- Секции ---------- */
+  main { max-width: var(--maxw); margin: 0 auto; padding: 8px 24px 80px; }
+  section { padding-top: 48px; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-head .icon { font-size: 26px; }
+  h2 { font-size: 26px; font-weight: 750; letter-spacing: -.01em; }
+  .sec-desc { color: var(--text-dim); font-size: 15px; max-width: 760px; margin-bottom: 24px; }
+
+  .grid {
+    display: grid; gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  }
+
+  /* ---------- Карточки ---------- */
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 22px; display: flex; flex-direction: column; gap: 10px;
+    transition: all .18s;
+  }
+  .card:hover { background: var(--card-hover); border-color: #2e3850; transform: translateY(-2px); }
+  .card.featured { border-color: rgba(91,140,255,.45); background: linear-gradient(180deg, rgba(91,140,255,.07), var(--card) 60%); }
+  .card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .card h3 { font-size: 17px; font-weight: 700; letter-spacing: -.01em; }
+  .card h3 a { color: var(--text); }
+  .card h3 a:hover { color: var(--accent); text-decoration: none; }
+  .status { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 99px; white-space: nowrap; flex-shrink: 0; }
+  .status.active  { color: var(--green);  background: rgba(62,207,142,.12); }
+  .status.done    { color: var(--accent); background: rgba(91,140,255,.12); }
+  .status.concept { color: var(--yellow); background: rgba(232,179,57,.12); }
+  .card p { color: var(--text-dim); font-size: 14px; flex: 1; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 11.5px; color: var(--text-faint);
+    background: var(--bg-soft); border: 1px solid var(--border);
+    padding: 2px 9px; border-radius: 6px;
+  }
+  .card-links { display: flex; gap: 14px; margin-top: 4px; }
+  .card-links a { font-size: 13px; font-weight: 600; }
+
+  /* ---------- Подвал ---------- */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 36px 24px; text-align: center;
+    color: var(--text-faint); font-size: 13.5px;
+  }
+  footer a { color: var(--text-dim); }
+
+  @media (max-width: 640px) {
+    header { padding-top: 48px; }
+    .stats { gap: 24px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">AI&nbsp;Projects</span>
+    <a class="nav-link" href="#agents">Агенты</a>
+    <a class="nav-link" href="#trading">Трейдинг</a>
+    <a class="nav-link" href="#bots">Telegram-боты</a>
+    <a class="nav-link" href="#tools">Инструменты</a>
+    <a class="nav-link" href="#automation">Автоматизация</a>
+    <a class="nav-link" href="#web">Веб-продукты</a>
+    <a class="nav-link" href="#concepts">Концепции</a>
+  </div>
+</nav>
+
+<header>
+  <div class="eyebrow">Портфолио · искусственный интеллект</div>
+  <h1>Проекты в области <span class="grad">ИИ и автоматизации</span></h1>
+  <p class="lead">
+    Мультиагентные системы на LangGraph и Claude Code, автономные торговые боты,
+    Telegram-сервисы с LLM, RAG-порталы и no-code-автоматизация.
+    От идеи и ТЗ до работающего продукта на сервере.
+  </p>
+  <div class="hero-links">
+    <a class="btn primary" href="https://github.com/nikulenka?tab=repositories" target="_blank" rel="noopener">GitHub → @nikulenka</a>
+    <a class="btn" href="#agents">Смотреть проекты ↓</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="num">30+</div><div class="lbl">репозиториев</div></div>
+    <div class="stat"><div class="num">7</div><div class="lbl">направлений</div></div>
+    <div class="stat"><div class="num">10+</div><div class="lbl">проектов с LLM-агентами</div></div>
+    <div class="stat"><div class="num">24/7</div><div class="lbl">боты в продакшене на VPS</div></div>
+  </div>
+</header>
+
+<div class="search-wrap">
+  <input id="search" type="search" placeholder="Поиск по названию, описанию, стеку…" autocomplete="off">
+</div>
+
+<main>
+
+  <!-- ================= АГЕНТЫ ================= -->
+  <section id="agents">
+    <div class="sec-head"><span class="icon">🤖</span><h2>Мультиагентные системы и ИИ-агенты</h2></div>
+    <p class="sec-desc">Системы из нескольких специализированных LLM-агентов: диспетчеризация, маршрутизация, базы знаний, guardrails. Основной стек — LangGraph, LangChain, Claude Code CLI, OpenRouter.</p>
+    <div class="grid">
+
+      <div class="card featured">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/UNUM_TV_ClaudCode" target="_blank" rel="noopener">UNUM Trading Bot v3</a></h3><span class="status active">в работе</span></div>
+        <p>Автономная мультиагентная торговая система BTC/USDT. Каждый агент — отдельный вызов Claude Code CLI с ограниченным набором инструментов; оркестратор управляет циклом «данные → анализ → решение → сделка», ведёт журнал гипотез и базу знаний стратегии.</p>
+        <div class="tags"><span class="tag">Claude Code</span><span class="tag">мультиагенты</span><span class="tag">Node.js</span><span class="tag">CCXT</span><span class="tag">Binance</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/Ales-and-Alesia" target="_blank" rel="noopener">Ales &amp; Alesia — платформа ЖКУ-агентов</a></h3><span class="status done">готово</span></div>
+        <p>Диспетчер и четыре специализированных агента для обработки обращений по жилищно-коммунальным услугам. Базы знаний в YAML редактируются специалистами без программирования.</p>
+        <div class="tags"><span class="tag">LangGraph</span><span class="tag">LangChain</span><span class="tag">Pydantic</span><span class="tag">Streamlit</span><span class="tag">OpenRouter</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/vn_erip_ai" target="_blank" rel="noopener">vn_erip_ai — ЖКХ AI-агент</a></h3><span class="status done">готово</span></div>
+        <p>Консольный ИИ-ассистент для автоматической классификации и диагностики проблем жителей: свет, вода, отопление. Диалоговая система на графах с поиском по базе знаний через эмбеддинги.</p>
+        <div class="tags"><span class="tag">LangGraph</span><span class="tag">Python</span><span class="tag">RAG</span><span class="tag">эмбеддинги</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/CTT-brainstorm" target="_blank" rel="noopener">CTT Brainstorm</a></h3><span class="status active">в работе</span></div>
+        <p>Мультиагентная система структурированного анализа идей и бизнес-задач: на вход — сырое описание, на выход — два готовых документа с проработкой проблемы, рисков и плана.</p>
+        <div class="tags"><span class="tag">Claude Code</span><span class="tag">skills</span><span class="tag">мультиагенты</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3>LLM Council</h3><span class="status done">исследование</span></div>
+        <p>Локальное веб-приложение «совет LLM»: один вопрос уходит сразу нескольким моделям через OpenRouter, они ревьюят и ранжируют ответы друг друга, модель-председатель формирует итог. Развёрнут и адаптирован для собственных задач.</p>
+        <div class="tags"><span class="tag">OpenRouter</span><span class="tag">Python</span><span class="tag">мульти-LLM</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/credit_agent_project" target="_blank" rel="noopener">Credit Agent Project</a></h3><span class="status done">исследование</span></div>
+        <p>Агентный пайплайн кредитных решений: извлечение финансовых данных из документов, расчёт метрик, супервизор-маршрутизатор, несколько стратегий рассуждения и guardrails-политики.</p>
+        <div class="tags"><span class="tag">LangGraph</span><span class="tag">Pydantic</span><span class="tag">Python</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3>Citizen Query RAG Portal</h3><span class="status done">прототип</span></div>
+        <p>Каркас RAG-портала для обращений граждан: вопрос → поиск релевантных документов в базе знаний → развёрнутый ответ со ссылками на источники.</p>
+        <div class="tags"><span class="tag">RAG</span><span class="tag">Python</span><span class="tag">база знаний</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= ТРЕЙДИНГ ================= -->
+  <section id="trading">
+    <div class="sec-head"><span class="icon">📈</span><h2>Алготрейдинг и финансы</h2></div>
+    <p class="sec-desc">Семейство торговых систем UNUM: от бэктест-движка до автономного бота на VPS. Плюс аналитика рынков предсказаний и применение ИИ в финтехе.</p>
+    <div class="grid">
+
+      <div class="card featured">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/UNUM_TV_ClaudCode" target="_blank" rel="noopener">UNUM Trading Bot — paper trading 24/7</a></h3><span class="status active">в работе</span></div>
+        <p>Автономный paper-trading бот BTC/USDT на Ubuntu VPS: читает Binance Futures REST API, анализирует рынок по адаптивной стратегии и исполняет сделки каждые 5 минут через cron. Архитектура: Mac (разработка) → GitHub → сервер (торговля 24/7).</p>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">Binance Futures</span><span class="tag">Ubuntu VPS</span><span class="tag">cron</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/Polymarket-bot" target="_blank" rel="noopener">Polymarket Whale Tracker</a></h3><span class="status active">в работе</span></div>
+        <p>Отслеживание «умных денег» на Polymarket: поиск кошельков с высоким WinRate/PnL и молодых «инсайдерских» кошельков с крупными ставками, перехват их сделок в реальном времени, оценка консенсуса и сигналы в Telegram. Опциональное копирование сделок в paper-режиме.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Polymarket API</span><span class="tag">Telegram</span><span class="tag">smart money</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/UNUM_Trading_Bot" target="_blank" rel="noopener">UNUM Trading Bot (платформа)</a></h3><span class="status done">готово</span></div>
+        <p>Торговая платформа для крипто-рынка: исполнение ордеров, подключение к биржевым API, риск-менеджмент, многоокружная конфигурация и деплой через Docker. Отдельный Next.js-фронтенд с PnL, историей сделок и графиками.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Docker</span><span class="tag">Next.js</span><span class="tag">REST API</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/UNUM_Back_Test" target="_blank" rel="noopener">UNUM Back Test</a></h3><span class="status done">готово</span></div>
+        <p>Движок бэктестирования стратегии UNUM: подтверждение сигналов на нескольких таймфреймах, симуляция трейлинг-стопов и брейк-ивена, метрики Sharpe, Sortino и максимальная просадка.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">numpy</span><span class="tag">бэктест</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/UNUM_News_Analytics_Bot" target="_blank" rel="noopener">UNUM News Analytics</a></h3><span class="status active">в работе</span></div>
+        <p>Еженедельные аналитические отчёты по новостному Telegram-каналу: автоматический сбор постов и генерация аналитики с помощью LLM-агента.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Telethon</span><span class="tag">Claude Code</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3>Alpaca Trading</h3><span class="status done">эксперимент</span></div>
+        <p>Эксперименты с брокерским API Alpaca: анализ BTC на 5-минутных свечах и автоматическая paper-торговля по сигналам.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Alpaca API</span><span class="tag">paper trading</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://nikulenka.github.io/ai4fintech/" target="_blank" rel="noopener">AI4Fintech</a></h3><span class="status active">онлайн</span></div>
+        <p>Интерактивный каталог сценариев применения ИИ в банках и финтехе: клиентский сервис, антифрод, кредитование, комплаенс. Фильтры по категориям, поиск, режимы «карточки/таблица».</p>
+        <div class="tags"><span class="tag">HTML/JS</span><span class="tag">каталог use-case</span><span class="tag">GitHub Pages</span></div>
+        <div class="card-links"><a href="https://github.com/nikulenka/ai4fintech" target="_blank" rel="noopener">GitHub →</a></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3>AML-AI — AI Compliance Officer</h3><span class="status done">прототип</span></div>
+        <p>Автоматическое извлечение и анализ бухгалтерских документов (счета-фактуры, платёжные поручения) для задач комплаенса и AML: парсинг полей, проверка реквизитов, выявление подозрительных операций.</p>
+        <div class="tags"><span class="tag">Streamlit</span><span class="tag">LLM</span><span class="tag">документы</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= TELEGRAM-БОТЫ ================= -->
+  <section id="bots">
+    <div class="sec-head"><span class="icon">💬</span><h2>Telegram-боты с ИИ</h2></div>
+    <p class="sec-desc">Продуктовые боты: генерация контента, конвертация документов через LLM, сервисы для конкретных аудиторий.</p>
+    <div class="grid">
+
+      <div class="card featured">
+        <div class="card-top"><h3>VidaKit</h3><span class="status active">в работе</span></div>
+        <p>Бот для детей с сахарным диабетом (сегмент запуска — инсулиновая помпа): ребёнок отмечает еду и воду, родитель получает отчёт в реальном времени. Веб-дашборд администратора, поддержка часовых поясов для пользователей по всему миру.</p>
+        <div class="tags"><span class="tag">Telegram Bot</span><span class="tag">healthtech</span><span class="tag">дашборд</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://pdf2md.nikulenka.com/" target="_blank" rel="noopener">pdf2md</a></h3><span class="status active">онлайн</span></div>
+        <p>Бот принимает PDF или DOCX, извлекает текст и через Gemini форматирует его в чистый Markdown с frontmatter — готовый к импорту в Obsidian. Отдельный лендинг для продвижения бота.</p>
+        <div class="tags"><span class="tag">Gemini</span><span class="tag">Node.js</span><span class="tag">Obsidian</span><span class="tag">TypeScript</span></div>
+        <div class="card-links"><a href="https://github.com/nikulenka/pdf2md-landing" target="_blank" rel="noopener">GitHub →</a></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/Compass-Day-bot" target="_blank" rel="noopener">Compass Day Bot</a></h3><span class="status done">готово</span></div>
+        <p>Ежедневная рассылка персонализированного контента: советы трёх ИИ-«экспертов» — психолога, стилиста и нутрициолога. Генерация через Gemini/OpenRouter, панель управления на Streamlit.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Gemini</span><span class="tag">OpenRouter</span><span class="tag">Streamlit</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/Telegram2md" target="_blank" rel="noopener">Telegram2md</a></h3><span class="status done">готово</span></div>
+        <p>Утилита экспорта сообщений из активных чатов Telegram в Markdown-файлы — для планирования дел на основе переписок за неделю и дальнейшего анализа в LLM.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Telethon</span><span class="tag">Markdown</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= ИНСТРУМЕНТЫ ================= -->
+  <section id="tools">
+    <div class="sec-head"><span class="icon">🛠️</span><h2>ИИ-инструменты для веба и данных</h2></div>
+    <p class="sec-desc">Прикладные инструменты, где LLM решает конкретную задачу: SEO-анализ, конструирование промптов, парсинг данных.</p>
+    <div class="grid">
+
+      <div class="card featured">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/SEO-Audit" target="_blank" rel="noopener">SEO-Audit</a></h3><span class="status done">готово</span></div>
+        <p>Инструмент глубокого технического SEO-анализа: краулинг структуры сайта, сбор метатегов, анализ контента и автоматический подбор оптимизаций с помощью Gemini 2.5 Flash.</p>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">Gemini</span><span class="tag">краулер</span><span class="tag">SEO</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/PromtMaster" target="_blank" rel="noopener">PromtMaster</a></h3><span class="status done">готово</span></div>
+        <p>Конструктор промптов для LLM: от простых инструкций до сложных цепочек контекста и few-shot-подходов. Помогает собирать и переиспользовать рабочие промпты.</p>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">prompt engineering</span><span class="tag">Gemini</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/QParser" target="_blank" rel="noopener">QParser</a></h3><span class="status done">готово</span></div>
+        <p>Универсальный разбор структурированных и неструктурированных данных: CSV, Excel, XML, JSON, PDF и HTML — извлечение таблиц, нормализация и приведение к единому формату.</p>
+        <div class="tags"><span class="tag">парсинг</span><span class="tag">ETL</span><span class="tag">данные</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3>NotebookLM / Obsidian-утилиты</h3><span class="status done">эксперимент</span></div>
+        <p>Скрипты для наведения порядка в базе знаний Obsidian: автоматическая организация заметок, построение MOC-структур, чистка ложных связей.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Obsidian</span><span class="tag">база знаний</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= АВТОМАТИЗАЦИЯ ================= -->
+  <section id="automation">
+    <div class="sec-head"><span class="icon">⚙️</span><h2>Автоматизация и no-code</h2></div>
+    <p class="sec-desc">Готовые автоматизации на n8n с ИИ внутри — для малого бизнеса и личных задач.</p>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-top"><h3>AI-агент записи клиентов</h3><span class="status done">готово</span></div>
+        <p>Связка Telegram + Google Calendar на n8n: агент ведёт диалог с клиентом, подбирает свободное время и сам создаёт запись в календаре.</p>
+        <div class="tags"><span class="tag">n8n</span><span class="tag">Telegram</span><span class="tag">Google Calendar</span><span class="tag">LLM</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3>Боты для коуча-диетолога</h3><span class="status done">готово</span></div>
+        <p>Набор автоматизаций для частной практики: бот-консультант по услугам, КБЖУ-бот для расчёта рациона, резервирование через Telegram.</p>
+        <div class="tags"><span class="tag">n8n</span><span class="tag">Telegram</span><span class="tag">LLM</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3>Авто-продавец amoCRM</h3><span class="status done">исследование</span></div>
+        <p>Сценарий «авто-продавца» на связке amoCRM + n8n: автоматическая квалификация и прогрев лидов с генерацией ответов через ИИ.</p>
+        <div class="tags"><span class="tag">n8n</span><span class="tag">amoCRM</span><span class="tag">продажи</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= ВЕБ ================= -->
+  <section id="web">
+    <div class="sec-head"><span class="icon">🌐</span><h2>Веб-продукты, созданные с помощью ИИ</h2></div>
+    <p class="sec-desc">Сайты и веб-приложения, разработанные в связке с ИИ-инструментами (Claude Code, Gemini AI Studio) — от лендинга до full-stack-приложения с CMS.</p>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://qr.nikulenka.com/" target="_blank" rel="noopener">QRDinamics</a></h3><span class="status active">онлайн</span></div>
+        <p>Менеджер динамических QR-кодов: адрес назначения можно менять в любой момент без перепечатки кода — каждый QR ведёт на короткий внутренний редирект.</p>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">SaaS</span><span class="tag">QR</span></div>
+        <div class="card-links"><a href="https://github.com/nikulenka/QRDinamics" target="_blank" rel="noopener">GitHub →</a></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://pages-cms.pages.dev" target="_blank" rel="noopener">Поместье «Русаково»</a></h3><span class="status active">онлайн</span></div>
+        <p>Сайт агроусадьбы на берегу реки Ислочь: Next.js 15 со статическим экспортом, панель управления контентом на Pages CMS, деплой на Cloudflare Pages.</p>
+        <div class="tags"><span class="tag">Next.js 15</span><span class="tag">Tailwind</span><span class="tag">Pages CMS</span><span class="tag">Cloudflare</span></div>
+        <div class="card-links"><a href="https://github.com/nikulenka/pages-cms" target="_blank" rel="noopener">GitHub →</a></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/CTT-Tarifs" target="_blank" rel="noopener">Калькулятор тарифов CTT.BY</a></h3><span class="status done">готово</span></div>
+        <p>Интерактивный калькулятор стоимости услуг электронного документооборота (EDI) для провайдера «Современные технологии торговли».</p>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">EDI</span><span class="tag">калькулятор</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/icf-nikulenka" target="_blank" rel="noopener">Сайт ICF-коуча</a></h3><span class="status done">готово</span></div>
+        <p>Персональный сайт коуча ICF, собранный в Google AI Studio с интеграцией Gemini API.</p>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">AI Studio</span><span class="tag">Gemini</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/Prizm-Meternet-Web-Site" target="_blank" rel="noopener">Prizm Meternet</a></h3><span class="status done">готово</span></div>
+        <p>Сайт технологического стартапа: посадочная страница продукта с описанием решения и команды.</p>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">лендинг</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://github.com/nikulenka/my-cv" target="_blank" rel="noopener">my-cv</a></h3><span class="status done">готово</span></div>
+        <p>Персональный сайт-резюме на React/Vite с быстрым деплоем на статический хостинг.</p>
+        <div class="tags"><span class="tag">React</span><span class="tag">Vite</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= КОНЦЕПЦИИ ================= -->
+  <section id="concepts">
+    <div class="sec-head"><span class="icon">💡</span><h2>Концепции и исследования</h2></div>
+    <p class="sec-desc">Проработанные идеи и технические задания — кандидаты на следующий MVP.</p>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-top"><h3>«Блогер-Ассистент»</h3><span class="status concept">концепция</span></div>
+        <p>ИИ-экосистема, автоматизирующая полный цикл работы с инфлюенсерами: аналитика базы из 4 500+ интеграций, поиск по базе знаний, подбор блогеров и сопровождение кампаний. Готовое ТЗ на MVP с архитектурой.</p>
+        <div class="tags"><span class="tag">ТЗ / MVP</span><span class="tag">RAG</span><span class="tag">инфлюенс-маркетинг</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3>«Битва фанатов»</h3><span class="status concept">концепция</span></div>
+        <p>Экосистема, объединяющая футбольных фанатов через цифровые соревнования и механику обмена внутриигровых валют. Конечная цель — чемпионат мира по футболу среди болельщиков: «игра в игре».</p>
+        <div class="tags"><span class="tag">gamefi</span><span class="tag">комьюнити</span><span class="tag">executive summary</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3><a href="https://nikulenka.github.io/base-ai-training/" target="_blank" rel="noopener">Курс по ИИ для начинающих</a></h3><span class="status concept">в разработке</span></div>
+        <p>Обучающий курс о практическом применении ChatGPT и других LLM — от первых промптов до собственных автоматизаций.</p>
+        <div class="tags"><span class="tag">обучение</span><span class="tag">ChatGPT</span><span class="tag">методика</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <p class="no-results" id="noResults">Ничего не найдено. Попробуйте другой запрос.</p>
+</main>
+
+<footer>
+  <p>© 2026 · Проекты в области ИИ · <a href="https://github.com/nikulenka" target="_blank" rel="noopener">github.com/nikulenka</a> · nikulenka@gmail.com</p>
+</footer>
+
+<script>
+  const search = document.getElementById('search');
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const sections = Array.from(document.querySelectorAll('main section'));
+  const noResults = document.getElementById('noResults');
+
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    let visible = 0;
+    cards.forEach(card => {
+      const hit = !q || card.textContent.toLowerCase().includes(q);
+      card.style.display = hit ? '' : 'none';
+      if (hit) visible++;
+    });
+    sections.forEach(sec => {
+      const any = Array.from(sec.querySelectorAll('.card')).some(c => c.style.display !== 'none');
+      sec.style.display = any ? '' : 'none';
+    });
+    noResults.style.display = visible ? 'none' : 'block';
+  });
+</script>
+
+</body>
+</html>
